@@ -1,12 +1,17 @@
 #include "MainWindow.h"
 
+using namespace App;
+
 MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt) {
     sloganPlbl = new QLabel(QObject::tr("Find the git commands you need \n without digging through the web."));
     usagePlbl = new QLabel(QObject::tr("Usage:"));
     notePlbl = new QLabel(QObject::tr("Note:"));
     instructionsPlbl = new QLabel(QObject::tr("I want to: "));
 
-    /*TODO Придумать как вынести слои более лаконично*/
+    buildWindow();
+}
+
+void MainWindow::buildWindow() {
     auto mainLayout = new QVBoxLayout;
     auto firstLvlLayout = new QHBoxLayout;
 
@@ -33,4 +38,6 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt) {
     mainLayout->addLayout(thirdLvlLayout);
 
     setLayout(mainLayout);
+    setWindowTitle("Git Helper");
+    setFixedSize(510, 257);
 }
