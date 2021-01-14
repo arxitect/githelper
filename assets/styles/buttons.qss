@@ -1,0 +1,31 @@
+QRadioButton {
+    color: #f14e32;
+    outline: none;
+}
+
+QRadioButton::indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 7px;
+}
+
+QRadioButton::indicator:checked {
+    background-color: #f14e32;
+    border: 2px solid #f14e32;
+}
+
+QRadioButton::indicator:unchecked {
+    background-color: #ffffff;
+    border: 2px solid #f14e32;
+}
+
+QPushButton {
+    color: #f14e32;
+    background-color: #ffffff;
+    outline:none;
+}
+
+QPushButton#langButton {
+    max-width: 50px;
+    max-height: 20px;
+}

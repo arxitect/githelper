@@ -8,10 +8,16 @@ namespace App {
 class MainWindow : public QWidget {
     Q_OBJECT
 private:
-    QLabel *sloganPlbl;
-    QLabel *usagePlbl;
-    QLabel *notePlbl;
-    QLabel *instructionsPlbl;
+    QLabel* sloganLbl;
+    QLabel* usageLbl;
+    QLabel* noteLbl;
+    QLabel* commandsLbl;
+    QRadioButton* darkModeBtn;
+    QPushButton* switchLangBtn;
+    QSpacerItem* spaceForTop;
+    QLabel* usageDisplay;
+    QPushButton* commandBtn;
+    QLabel* noteDisplay;
 
     void buildWindow();
 

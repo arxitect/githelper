@@ -8,12 +8,13 @@ namespace App {
 class Config {
 private:
     explicit Config() = default;
+    static Config* config;
 public:
     Config(Config &) = delete;
     void operator=(const Config &) = delete;
 
-    static Config *getInstance();
-    void loadStyles();
+    static Config* getInstance() ;
+    void loadStyles() const;
 };
 
 }

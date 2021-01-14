@@ -19,7 +19,7 @@ find_package(Qt5Sql COMPONENTS REQUIRED)
 
 include_directories(${Qt5Widgets_INCLUDE_DIRS})
 
-set(SOURCE_FILES main.cpp app/MainWindow.cpp app/Config.cpp)
+set(SOURCE_FILES main.cpp app/MainWindow.cpp app/MainWindow.h app/Config.cpp app/Config.h)
 add_executable(${APP_NAME} ${SOURCE_FILES})
 
 target_link_libraries(${APP_NAME} Qt5::Widgets Qt5::Sql)
