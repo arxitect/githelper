@@ -1,5 +1,5 @@
 QRadioButton {
-    color: #f14e32;
+    color: #4e443c;
     outline: none;
 }
 
@@ -20,7 +20,7 @@ QRadioButton::indicator:unchecked {
 }
 
 QPushButton {
-    color: #f14e32;
+    color: #4e443c;
     background-color: #ffffff;
     outline:none;
 }
@@ -28,4 +28,14 @@ QPushButton {
 QPushButton#langButton {
     max-width: 50px;
     max-height: 20px;
+}
+
+QPushButton#copyButton {
+    max-height: 50px;
+    max-width: 50px;
+    margin-top: 3px;
+    margin-left: 210px;
+    border: none;
+    background-color: #ffffff;
+    qproperty-icon: url(../assets/images/icons/copy.png) 0 0 0 0;
 }

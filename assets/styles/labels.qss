@@ -1,3 +1,21 @@
 QLabel {
+    color: #4e443c;
+}
+
+QLabel#usageDisplay {
+    background-color: #ffffff;
     color: #f14e32;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-left: 5px solid #f14e32;
+    min-height: 30px;
+}
+
+QLabel#noteDisplay {
+    background-color: #ffffff;
+    color: #f14e32;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-left: 5px solid #f14e32;
+    min-height: 30px;
 }

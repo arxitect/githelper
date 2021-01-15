@@ -4,12 +4,21 @@ using namespace App;
 
 MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt) {
     /* first, init elements of window */
-    spaceForTop = new QSpacerItem(40, 20);
+    spaceForTop = new QSpacerItem(100, 20);
     sloganLbl = new QLabel("Find the git commands you need \n without digging through the web.");
+    sloganLbl->setAlignment(Qt::AlignTop);
     usageLbl = new QLabel("Usage:");
+
     usageDisplay = new QLabel("git add <file.ext> "); /* this example text TODO: remove text*/
+    usageDisplay->setObjectName("usageDisplay");
+
+    copyBtn = new QPushButton();
+    copyBtn->setObjectName("copyButton");
+    copyBtn->setParent(usageDisplay);
+
     noteLbl = new QLabel("Note:");
     noteDisplay = new QLabel("To add all the files in the current directory "); /* this example text TODO: remove text*/
+    noteDisplay->setObjectName("noteDisplay");
     commandsLbl = new QLabel("I want to: ");
     darkModeBtn = new QRadioButton("&Dark mode");
 
@@ -34,44 +43,47 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt) {
 void MainWindow::buildWindow() {
     /* init layouts */
     auto mainLayout = new QVBoxLayout;
-    auto firstLvlLayout = new QHBoxLayout;
+    auto fLvlLayout = new QHBoxLayout;
 
-    auto secondLvlLayout = new QHBoxLayout;
-    auto secondSubLayout = new QVBoxLayout;
+    auto sLvlLayout = new QHBoxLayout;
+    auto sSubLayout = new QVBoxLayout;
 
-    auto thirdLvlLayout = new QHBoxLayout;
-    auto thirdSubLayoutL = new QVBoxLayout;
-    auto thirdSubLayoutR = new QVBoxLayout;
+    auto tLvlLayout = new QHBoxLayout;
+    auto tSubLayoutL = new QVBoxLayout;
+    auto tSubLayoutR = new QVBoxLayout;
 
     /* add widgets to layouts */
 
     // 1.
-    firstLvlLayout->addWidget(darkModeBtn);
-    firstLvlLayout->addSpacerItem(spaceForTop);
-    firstLvlLayout->addWidget(switchLangBtn);
+    fLvlLayout->addWidget(darkModeBtn);
+    fLvlLayout->addSpacerItem(spaceForTop);
+    fLvlLayout->addWidget(switchLangBtn);
 
     // 2.
-    secondSubLayout->addWidget(usageLbl);
-    secondSubLayout->addWidget(usageDisplay);
-    secondLvlLayout->addWidget(sloganLbl);
-    secondLvlLayout->addLayout(secondSubLayout);
-
+    sSubLayout->addWidget(usageLbl);
+    sSubLayout->addWidget(usageDisplay);
+    sSubLayout->setAlignment(Qt::AlignTop);
+    sLvlLayout->setContentsMargins(0, 10, 0, 0);
+    sLvlLayout->addWidget(sloganLbl);
+    sLvlLayout->addLayout(sSubLayout);
     // 3.
-    thirdSubLayoutL->addWidget(commandsLbl);
-    thirdSubLayoutL->addWidget(commandBtn);
+    tSubLayoutL->addWidget(commandsLbl);
+    tSubLayoutL->addWidget(commandBtn);
     /* example buttons for command usage TODO remove it*/
     auto exCommandBtn = new  QPushButton("new changes");
-    thirdSubLayoutL->addWidget(exCommandBtn);
+    tSubLayoutL->addWidget(exCommandBtn);
     /* ---------------------------- */
-    thirdSubLayoutR->addWidget(noteLbl);
-    thirdSubLayoutR->addWidget(noteDisplay);
-    thirdLvlLayout->addLayout(thirdSubLayoutL);
-    thirdLvlLayout->addLayout(thirdSubLayoutR);
+    tSubLayoutL->setAlignment(Qt::AlignTop);
+    tSubLayoutR->addWidget(noteLbl);
+    tSubLayoutR->addWidget(noteDisplay);
+    tSubLayoutR->setAlignment(Qt::AlignTop);
+    tLvlLayout->addLayout(tSubLayoutL);
+    tLvlLayout->addLayout(tSubLayoutR);
 
     // main
-    mainLayout->addLayout(firstLvlLayout);
-    mainLayout->addLayout(secondLvlLayout);
-    mainLayout->addLayout(thirdLvlLayout);
+    mainLayout->addLayout(fLvlLayout);
+    mainLayout->addLayout(sLvlLayout);
+    mainLayout->addLayout(tLvlLayout);
 
     /* Set window config */
     setLayout(mainLayout);

@@ -18,9 +18,9 @@ private:
     QLabel* usageDisplay;
     QPushButton* commandBtn;
     QLabel* noteDisplay;
+    QPushButton* copyBtn;
 
     void buildWindow();
-
 public:
     explicit MainWindow(QWidget *pwgt = nullptr);
 };
