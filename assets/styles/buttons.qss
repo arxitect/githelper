@@ -23,10 +23,13 @@ QPushButton {
     color: #4e443c;
     background-color: #ffffff;
     outline:none;
+    text-align: left;
+    padding-left: 10px;
+    height: 25px;
 }
 
 QPushButton#langButton {
-    max-width: 50px;
+    max-width: 35px;
     max-height: 20px;
 }
 
@@ -34,7 +37,7 @@ QPushButton#copyButton {
     max-height: 50px;
     max-width: 50px;
     margin-top: 3px;
-    margin-left: 210px;
+    margin-left: 195px;
     border: none;
     background-color: #ffffff;
     qproperty-icon: url(../assets/images/icons/copy.png) 0 0 0 0;

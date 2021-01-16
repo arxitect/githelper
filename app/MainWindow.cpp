@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt) {
     spaceForTop = new QSpacerItem(100, 20);
     sloganLbl = new QLabel("Find the git commands you need \n without digging through the web.");
     sloganLbl->setAlignment(Qt::AlignTop);
+    sloganLbl->setObjectName("sloganLbl");
     usageLbl = new QLabel("Usage:");
 
     usageDisplay = new QLabel("git add <file.ext> "); /* this example text TODO: remove text*/
@@ -60,27 +61,30 @@ void MainWindow::buildWindow() {
     fLvlLayout->addWidget(switchLangBtn);
 
     // 2.
+    sSubLayout->setAlignment(Qt::AlignTop);
     sSubLayout->addWidget(usageLbl);
     sSubLayout->addWidget(usageDisplay);
-    sSubLayout->setAlignment(Qt::AlignTop);
     sLvlLayout->setContentsMargins(0, 10, 0, 0);
     sLvlLayout->addWidget(sloganLbl);
     sLvlLayout->addLayout(sSubLayout);
     // 3.
+    tSubLayoutL->setAlignment(Qt::AlignTop);
+    tSubLayoutL->setContentsMargins(0, 0, 30, 0);
     tSubLayoutL->addWidget(commandsLbl);
     tSubLayoutL->addWidget(commandBtn);
     /* example buttons for command usage TODO remove it*/
     auto exCommandBtn = new  QPushButton("new changes");
     tSubLayoutL->addWidget(exCommandBtn);
     /* ---------------------------- */
-    tSubLayoutL->setAlignment(Qt::AlignTop);
     tSubLayoutR->addWidget(noteLbl);
     tSubLayoutR->addWidget(noteDisplay);
     tSubLayoutR->setAlignment(Qt::AlignTop);
+    tLvlLayout->setContentsMargins(0, 10, 0, 0);
     tLvlLayout->addLayout(tSubLayoutL);
     tLvlLayout->addLayout(tSubLayoutR);
 
     // main
+    mainLayout->setAlignment(Qt::AlignTop);
     mainLayout->addLayout(fLvlLayout);
     mainLayout->addLayout(sLvlLayout);
     mainLayout->addLayout(tLvlLayout);

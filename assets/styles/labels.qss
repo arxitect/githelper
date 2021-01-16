@@ -2,6 +2,10 @@ QLabel {
     color: #4e443c;
 }
 
+QLabel#sloganLbl {
+    max-height: 60px;
+}
+
 QLabel#usageDisplay {
     background-color: #ffffff;
     color: #f14e32;
@@ -9,6 +13,7 @@ QLabel#usageDisplay {
     border-bottom-left-radius: 5px;
     border-left: 5px solid #f14e32;
     min-height: 30px;
+    max-width: 230px;
 }
 
 QLabel#noteDisplay {
@@ -18,4 +23,5 @@ QLabel#noteDisplay {
     border-bottom-left-radius: 5px;
     border-left: 5px solid #f14e32;
     min-height: 30px;
+    max-width: 230px;
 }
