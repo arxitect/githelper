@@ -19,10 +19,17 @@ private:
     QPushButton* commandBtn;
     QLabel* noteDisplay;
     QPushButton* copyBtn;
+    QSettings settings;
 
+    void connectElements();
     void buildWindow();
+    void readSettings();
+    void writeSettings();
 public:
     explicit MainWindow(QWidget *pwgt = nullptr);
+    ~MainWindow() override;
+public slots:
+    void slotDarkModeBtnClicked();
 };
 
 }

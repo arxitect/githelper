@@ -1,5 +1,5 @@
 QRadioButton {
-    color: #4e443c;
+    color: #222222;
     outline: none;
 }
 
@@ -20,7 +20,7 @@ QRadioButton::indicator:unchecked {
 }
 
 QPushButton {
-    color: #4e443c;
+    color: #222222;
     background-color: #ffffff;
     outline:none;
     text-align: left;
@@ -40,5 +40,5 @@ QPushButton#copyButton {
     margin-left: 195px;
     border: none;
     background-color: #ffffff;
-    qproperty-icon: url(../assets/images/icons/copy.png) 0 0 0 0;
+    qproperty-icon: url(../assets/images/icons/copy.png);
 }

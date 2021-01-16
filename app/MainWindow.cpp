@@ -1,13 +1,16 @@
 #include "MainWindow.h"
+#include "Config.h"
 
 using namespace App;
 
-MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt) {
-    /* first, init elements of window */
+MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "Git Helper") {
+    /* init elements of window */
     spaceForTop = new QSpacerItem(100, 20);
+
     sloganLbl = new QLabel("Find the git commands you need \n without digging through the web.");
     sloganLbl->setAlignment(Qt::AlignTop);
     sloganLbl->setObjectName("sloganLbl");
+
     usageLbl = new QLabel("Usage:");
 
     usageDisplay = new QLabel("git add <file.ext> "); /* this example text TODO: remove text*/
@@ -18,17 +21,21 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt) {
     copyBtn->setParent(usageDisplay);
 
     noteLbl = new QLabel("Note:");
+
     noteDisplay = new QLabel("To add all the files in the current directory "); /* this example text TODO: remove text*/
     noteDisplay->setObjectName("noteDisplay");
+
     commandsLbl = new QLabel("I want to: ");
     darkModeBtn = new QRadioButton("&Dark mode");
 
-    /* this example items TODO init by setting*/
-    switchLangBtn = new QPushButton("Ru");
+    /*
+     * TODO This function will be in the 1.2 version
+     * switchLangBtn = new QPushButton("Ru");
     auto langMenu = new QMenu(switchLangBtn);
     langMenu->addAction("En");
     switchLangBtn->setMenu(langMenu);
     switchLangBtn->setObjectName("langButton");
+     */
 
     commandBtn = new QPushButton("...");
     auto commandMenu = new QMenu(commandBtn);
@@ -38,7 +45,31 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt) {
     commandMenu->addAction("clone");
     commandBtn->setMenu(commandMenu);
 
+    readSettings();
+    connectElements();
     buildWindow();
+}
+
+void MainWindow::readSettings() {
+    settings.beginGroup("/Settings");
+
+    //Dark mode
+    auto darkMode = settings.value("/darkMode", false).toBool();
+    darkModeBtn->setChecked(darkMode);
+
+    settings.endGroup();
+}
+
+void MainWindow::writeSettings() {
+    settings.beginGroup("/Settings");
+
+    settings.setValue("/darkMode", darkModeBtn->isChecked());
+
+    settings.endGroup();
+}
+
+void MainWindow::connectElements() {
+    connect(darkModeBtn, SIGNAL(clicked()), SLOT(slotDarkModeBtnClicked()));
 }
 
 void MainWindow::buildWindow() {
@@ -58,7 +89,7 @@ void MainWindow::buildWindow() {
     // 1.
     fLvlLayout->addWidget(darkModeBtn);
     fLvlLayout->addSpacerItem(spaceForTop);
-    fLvlLayout->addWidget(switchLangBtn);
+    //fLvlLayout->addWidget(switchLangBtn);
 
     // 2.
     sSubLayout->setAlignment(Qt::AlignTop);
@@ -90,8 +121,19 @@ void MainWindow::buildWindow() {
     mainLayout->addLayout(tLvlLayout);
 
     /* Set window config */
+    (Config::getInstance())->loadStyles(darkModeBtn->isChecked());
+
     setLayout(mainLayout);
     setObjectName("mainWindow");
     setWindowTitle("Git Helper");
     setFixedSize(510, 257);
+}
+
+/* SLOTS */
+void MainWindow::slotDarkModeBtnClicked() {
+    (Config::getInstance())->loadStyles(darkModeBtn->isChecked());
+}
+
+MainWindow::~MainWindow() {
+    writeSettings();
 }

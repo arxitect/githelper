@@ -1,0 +1,44 @@
+QRadioButton {
+    color: #f0efe7;
+    outline: none;
+}
+
+QRadioButton::indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 7px;
+}
+
+QRadioButton::indicator:checked {
+    background-color: #f14e32;
+    border: 2px solid #f14e32;
+}
+
+QRadioButton::indicator:unchecked {
+    background-color: #ffffff;
+    border: 2px solid #f14e32;
+}
+
+QPushButton {
+    color: #4e443c;
+    background-color: #ffffff;
+    outline:none;
+    text-align: left;
+    padding-left: 10px;
+    height: 25px;
+}
+
+QPushButton#langButton {
+    max-width: 35px;
+    max-height: 20px;
+}
+
+QPushButton#copyButton {
+    max-height: 50px;
+    max-width: 50px;
+    margin-top: 3px;
+    margin-left: 195px;
+    border: none;
+    background-color: #ffffff;
+    qproperty-icon: url(../assets/images/icons/copy.png);
+}

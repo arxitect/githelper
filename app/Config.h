@@ -1,5 +1,5 @@
 #ifndef GIT_HELPER_CONFIG_H
-#define GIT_HELPER_CONFIG_Hs
+#define GIT_HELPER_CONFIG_H
 
 #include <string>
 
@@ -14,7 +14,7 @@ public:
     void operator=(const Config &) = delete;
 
     static Config* getInstance() ;
-    void loadStyles() const;
+    void loadStyles(bool darkMode = false) const;
 };
 
 }

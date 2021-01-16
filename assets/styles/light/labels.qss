@@ -1,5 +1,5 @@
 QLabel {
-    color: #4e443c;
+    color: #222222;
 }
 
 QLabel#sloganLbl {
@@ -12,8 +12,10 @@ QLabel#usageDisplay {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     border-left: 5px solid #f14e32;
-    min-height: 30px;
+    min-height: 20px;
     max-width: 230px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 QLabel#noteDisplay {
@@ -22,6 +24,9 @@ QLabel#noteDisplay {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     border-left: 5px solid #f14e32;
-    min-height: 30px;
-    max-width: 230px;
+    min-height: 20px;
+    max-width: 220px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
 }

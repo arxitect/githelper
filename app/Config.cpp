@@ -14,12 +14,13 @@ Config* Config::getInstance() {
     return config;
 }
 
-void Config::loadStyles() const {
+void Config::loadStyles(bool darkMode) const {
     QString strCss;
+    QString prefix = darkMode ? "dark" : "light";
     QStringList styles {
-        "../assets/styles/app.qss",
-        "../assets/styles/buttons.qss",
-        "../assets/styles/labels.qss"
+        "../assets/styles/" + prefix + "/app.qss",
+        "../assets/styles/" + prefix + "/buttons.qss",
+        "../assets/styles/" + prefix + "/labels.qss"
     };
 
     for (auto &filename : styles) {
