@@ -1,7 +1,18 @@
+/****************************************************************************
+ *
+ * This file is part of the Git Helper application.
+ *
+ * This class is the basis of the entire application.
+ * Elements are created here, settings are saved, and
+ * signals for elements are set.
+ *
+****************************************************************************/
 #ifndef GIT_HELPER_MAINWINDOW_H
 #define GIT_HELPER_MAINWINDOW_H
 
 #include <QtWidgets>
+#include "Config.h"
+#include "DbProxy.h"
 
 namespace App {
 
@@ -30,6 +41,7 @@ public:
     ~MainWindow() override;
 public slots:
     void slotDarkModeBtnClicked();
+    void slotCommandButton();
 };
 
 }

@@ -1,7 +1,12 @@
+/****************************************************************************
+ *
+ * This file is part of the Git Helper application.
+ *
+ * Application configuration singleton.
+ *
+****************************************************************************/
 #ifndef GIT_HELPER_CONFIG_H
 #define GIT_HELPER_CONFIG_H
-
-#include <string>
 
 namespace App {
 

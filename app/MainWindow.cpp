@@ -1,12 +1,11 @@
 #include "MainWindow.h"
-#include "Config.h"
 
 using namespace App;
 
+auto config = Config::getInstance();
+// Init elements of MainWindow widget
 MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "Git Helper") {
-    /* init elements of window */
     spaceForTop = new QSpacerItem(100, 20);
-
     sloganLbl = new QLabel("Find the git commands you need \n without digging through the web.");
     sloganLbl->setAlignment(Qt::AlignTop);
     sloganLbl->setObjectName("sloganLbl");
@@ -20,29 +19,22 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "G
     copyBtn->setObjectName("copyButton");
     copyBtn->setParent(usageDisplay);
 
-    noteLbl = new QLabel("Note:");
+    noteLbl = new QLabel("");
 
-    noteDisplay = new QLabel("To add all the files in the current directory "); /* this example text TODO: remove text*/
+    noteDisplay = new QLabel("");
+    noteDisplay->setVisible(false);
     noteDisplay->setObjectName("noteDisplay");
 
     commandsLbl = new QLabel("I want to: ");
     darkModeBtn = new QRadioButton("&Dark mode");
 
-    /*
-     * TODO This function will be in the 1.2 version
-     * switchLangBtn = new QPushButton("Ru");
-    auto langMenu = new QMenu(switchLangBtn);
-    langMenu->addAction("En");
-    switchLangBtn->setMenu(langMenu);
-    switchLangBtn->setObjectName("langButton");
-     */
-
     commandBtn = new QPushButton("...");
     auto commandMenu = new QMenu(commandBtn);
-    /* this example items TODO init by data from database*/
-    commandMenu->addAction("add");
-    commandMenu->addAction("cherry-pick");
-    commandMenu->addAction("clone");
+    auto mainCommands = (new DbProxy())->getMainCommands();
+    /** TODO command button usage*/
+    for(auto &command : mainCommands) {
+        commandMenu->addAction(command.name, this,SLOT(slotCommandButton()));
+    }
     commandBtn->setMenu(commandMenu);
 
     readSettings();
@@ -50,6 +42,7 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "G
     buildWindow();
 }
 
+// Settings
 void MainWindow::readSettings() {
     settings.beginGroup("/Settings");
 
@@ -72,6 +65,7 @@ void MainWindow::connectElements() {
     connect(darkModeBtn, SIGNAL(clicked()), SLOT(slotDarkModeBtnClicked()));
 }
 
+// build all elements to MainWindow widget
 void MainWindow::buildWindow() {
     /* init layouts */
     auto mainLayout = new QVBoxLayout;
@@ -103,10 +97,6 @@ void MainWindow::buildWindow() {
     tSubLayoutL->setContentsMargins(0, 0, 30, 0);
     tSubLayoutL->addWidget(commandsLbl);
     tSubLayoutL->addWidget(commandBtn);
-    /* example buttons for command usage TODO remove it*/
-    auto exCommandBtn = new  QPushButton("new changes");
-    tSubLayoutL->addWidget(exCommandBtn);
-    /* ---------------------------- */
     tSubLayoutR->addWidget(noteLbl);
     tSubLayoutR->addWidget(noteDisplay);
     tSubLayoutR->setAlignment(Qt::AlignTop);
@@ -121,7 +111,7 @@ void MainWindow::buildWindow() {
     mainLayout->addLayout(tLvlLayout);
 
     /* Set window config */
-    (Config::getInstance())->loadStyles(darkModeBtn->isChecked());
+    config->loadStyles(darkModeBtn->isChecked());
 
     setLayout(mainLayout);
     setObjectName("mainWindow");
@@ -129,11 +119,15 @@ void MainWindow::buildWindow() {
     setFixedSize(510, 257);
 }
 
-/* SLOTS */
-void MainWindow::slotDarkModeBtnClicked() {
-    (Config::getInstance())->loadStyles(darkModeBtn->isChecked());
-}
-
 MainWindow::~MainWindow() {
     writeSettings();
+}
+
+// SLOTS
+void MainWindow::slotDarkModeBtnClicked() {
+    config->loadStyles(darkModeBtn->isChecked());
+}
+
+void MainWindow::slotCommandButton() {
+    qDebug() << "Click!!!!";
 }
