@@ -3,9 +3,13 @@
 using namespace App;
 
 auto config = Config::getInstance();
-// Init elements of MainWindow widget
+/* Init elements of MainWindow widget */
 MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "Git Helper") {
+    // First level items
     spaceForTop = new QSpacerItem(100, 20);
+    darkModeBtn = new QRadioButton("&Dark mode");
+
+    // Second level items
     sloganLbl = new QLabel("Find the git commands you need \n without digging through the web.");
     sloganLbl->setAlignment(Qt::AlignTop);
     sloganLbl->setObjectName("sloganLbl");
@@ -19,6 +23,7 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "G
     copyBtn->setObjectName("copyButton");
     copyBtn->setParent(usageDisplay);
 
+    // Third level items
     noteLbl = new QLabel("");
 
     noteDisplay = new QLabel("");
@@ -26,27 +31,26 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "G
     noteDisplay->setObjectName("noteDisplay");
 
     commandsLbl = new QLabel("I want to: ");
-    darkModeBtn = new QRadioButton("&Dark mode");
 
     commandBtn = new QPushButton("...");
     auto commandMenu = new QMenu(commandBtn);
     auto mainCommands = (new DbProxy())->getMainCommands();
-    /** TODO command button usage*/
     for(auto &command : mainCommands) {
-        commandMenu->addAction(command.name, this,SLOT(slotCommandButton()));
+        commandMenu->addAction(command.name, [=](){ slotCommandButtonClicked(command); });
     }
     commandBtn->setMenu(commandMenu);
 
+    // logic of elements
     readSettings();
     connectElements();
     buildWindow();
 }
 
-// Settings
+/* Settings */
 void MainWindow::readSettings() {
     settings.beginGroup("/Settings");
 
-    //Dark mode
+    // load Dark mode
     auto darkMode = settings.value("/darkMode", false).toBool();
     darkModeBtn->setChecked(darkMode);
 
@@ -65,7 +69,7 @@ void MainWindow::connectElements() {
     connect(darkModeBtn, SIGNAL(clicked()), SLOT(slotDarkModeBtnClicked()));
 }
 
-// build all elements to MainWindow widget
+/* Build elements to MainWindow widget */
 void MainWindow::buildWindow() {
     /* init layouts */
     auto mainLayout = new QVBoxLayout;
@@ -92,6 +96,7 @@ void MainWindow::buildWindow() {
     sLvlLayout->setContentsMargins(0, 10, 0, 0);
     sLvlLayout->addWidget(sloganLbl);
     sLvlLayout->addLayout(sSubLayout);
+
     // 3.
     tSubLayoutL->setAlignment(Qt::AlignTop);
     tSubLayoutL->setContentsMargins(0, 0, 30, 0);
@@ -123,11 +128,12 @@ MainWindow::~MainWindow() {
     writeSettings();
 }
 
-// SLOTS
-void MainWindow::slotDarkModeBtnClicked() {
+/* SLOTS */
+void MainWindow::slotDarkModeBtnClicked() const {
     config->loadStyles(darkModeBtn->isChecked());
 }
 
-void MainWindow::slotCommandButton() {
-    qDebug() << "Click!!!!";
+void MainWindow::slotCommandButtonClicked(const Command& command) const {
+    // TODO button full logic
+    commandBtn->setText(command.name);
 }

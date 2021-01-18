@@ -13,7 +13,7 @@
 
 namespace App {
 
-struct command {
+struct Command {
     unsigned id;
     QString name;
     QString usage;
@@ -29,7 +29,7 @@ public:
     explicit DbProxy();
     ~DbProxy();
 
-    QVector<command> getMainCommands();
+    QVector<Command> getMainCommands();
 };
 
 }

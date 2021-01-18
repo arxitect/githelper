@@ -11,9 +11,9 @@ DbProxy::DbProxy() {
     db.open();
 }
 
-QVector<command> DbProxy::getMainCommands() {
+QVector<Command> DbProxy::getMainCommands() {
     QSqlQuery query;
-    QVector<command> commands;
+    QVector<Command> commands;
 
     query.exec("SELECT * FROM commands WHERE is_main = 1");
     auto record = query.record();

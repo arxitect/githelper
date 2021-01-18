@@ -40,8 +40,8 @@ public:
     explicit MainWindow(QWidget *pwgt = nullptr);
     ~MainWindow() override;
 public slots:
-    void slotDarkModeBtnClicked();
-    void slotCommandButton();
+    void slotDarkModeBtnClicked() const;
+    void slotCommandButtonClicked(const Command& command) const;
 };
 
 }
