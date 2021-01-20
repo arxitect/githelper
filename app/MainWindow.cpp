@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "G
 
     usageLbl = new QLabel("Usage:");
 
-    usageDisplay = new QLabel("git add <file.ext> "); /* this example text TODO: remove text*/
+    usageDisplay = new QLabel("");
     usageDisplay->setObjectName("usageDisplay");
 
     copyBtn = new QPushButton();
@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "G
     auto commandMenu = new QMenu(commandBtn);
     auto mainCommands = (new DbProxy())->getMainCommands();
     for(auto &command : mainCommands) {
-        commandMenu->addAction(command.name, [=](){ slotCommandButtonClicked(command); });
+        commandMenu->addAction(command.name, [&, command](){ slotCommandButtonClicked(command); });
     }
     commandBtn->setMenu(commandMenu);
 
@@ -134,6 +134,13 @@ void MainWindow::slotDarkModeBtnClicked() const {
 }
 
 void MainWindow::slotCommandButtonClicked(const Command& command) const {
-    // TODO button full logic
     commandBtn->setText(command.name);
+    usageDisplay->setText(command.usage);
+    if(command.note_en.length() > 0) {
+        noteDisplay->setVisible(true);
+        noteDisplay->setText(command.note_en);
+    }else {
+        noteDisplay->setVisible(false);
+        noteDisplay->setText("");
+    }
 }

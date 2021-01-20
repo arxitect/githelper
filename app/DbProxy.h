@@ -18,6 +18,7 @@ struct Command {
     QString name;
     QString usage;
     QString note_en;
+    QVector<Command> children;
 };
 
 class DbProxy {

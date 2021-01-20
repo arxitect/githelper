@@ -16,6 +16,7 @@ QLabel#usageDisplay {
     max-width: 230px;
     padding-top: 5px;
     padding-bottom: 5px;
+    padding-left: 5px;
 }
 
 QLabel#noteDisplay {
@@ -27,6 +28,7 @@ QLabel#noteDisplay {
     min-height: 20px;
     max-width: 220px;
     padding-top: 5px;
+    padding-left: 5px;
     padding-bottom: 5px;
     padding-right: 10px;
 }
