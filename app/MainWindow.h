@@ -28,6 +28,8 @@ private:
     QSpacerItem* spaceForTop;
     QLabel* usageDisplay;
     QPushButton* commandBtn;
+    QPushButton* commandBtn2;
+    QPushButton* commandBtn3;
     QLabel* noteDisplay;
     QPushButton* copyBtn;
     QSettings settings;

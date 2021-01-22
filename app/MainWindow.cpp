@@ -38,7 +38,13 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "G
     for(auto &command : mainCommands) {
         commandMenu->addAction(command.name, [&, command](){ slotCommandButtonClicked(command); });
     }
+
+    // hidden command buttons
     commandBtn->setMenu(commandMenu);
+    commandBtn2 = new QPushButton("");
+    commandBtn2->setVisible(false);
+    commandBtn3 = new QPushButton("");
+    commandBtn3->setVisible(false);
 
     // logic of elements
     readSettings();
@@ -102,6 +108,8 @@ void MainWindow::buildWindow() {
     tSubLayoutL->setContentsMargins(0, 0, 30, 0);
     tSubLayoutL->addWidget(commandsLbl);
     tSubLayoutL->addWidget(commandBtn);
+    tSubLayoutL->addWidget(commandBtn2);
+    tSubLayoutL->addWidget(commandBtn3);
     tSubLayoutR->addWidget(noteLbl);
     tSubLayoutR->addWidget(noteDisplay);
     tSubLayoutR->setAlignment(Qt::AlignTop);
@@ -136,10 +144,13 @@ void MainWindow::slotDarkModeBtnClicked() const {
 void MainWindow::slotCommandButtonClicked(const Command& command) const {
     commandBtn->setText(command.name);
     usageDisplay->setText(command.usage);
+
     if(command.note_en.length() > 0) {
+        noteLbl->setText("Note:");
         noteDisplay->setVisible(true);
         noteDisplay->setText(command.note_en);
     }else {
+        noteLbl->setText("");
         noteDisplay->setVisible(false);
         noteDisplay->setText("");
     }

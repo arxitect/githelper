@@ -8,7 +8,9 @@ DbProxy::DbProxy() {
     db.setUserName("root");
     db.setHostName("localhost");
     db.setPassword("password");
-    db.open();
+    if (!db.open()) {
+
+    }
 }
 
 QVector<Command> DbProxy::getMainCommands() {
