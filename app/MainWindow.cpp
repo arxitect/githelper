@@ -145,13 +145,17 @@ void MainWindow::slotCommandButtonClicked(const Command& command) const {
     commandBtn->setText(command.name);
     usageDisplay->setText(command.usage);
 
-    if(command.note_en.length() > 0) {
+    if(command.note.length() > 0) {
         noteLbl->setText("Note:");
         noteDisplay->setVisible(true);
-        noteDisplay->setText(command.note_en);
+        noteDisplay->setText(command.note);
     }else {
         noteLbl->setText("");
         noteDisplay->setVisible(false);
         noteDisplay->setText("");
+    }
+
+    if(command.hasChild) {
+        auto childCommands = (new DbProxy())->getChilrenCommands(command.id);
     }
 }

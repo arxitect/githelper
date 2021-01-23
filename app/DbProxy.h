@@ -17,8 +17,8 @@ struct Command {
     unsigned id;
     QString name;
     QString usage;
-    QString note_en;
-    QVector<Command> children;
+    QString note;
+    bool hasChild;
 };
 
 class DbProxy {
@@ -31,6 +31,7 @@ public:
     ~DbProxy();
 
     QVector<Command> getMainCommands();
+    QVector<Command> getChilrenCommands(unsigned id);
 };
 
 }
