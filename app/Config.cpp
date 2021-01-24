@@ -35,4 +35,19 @@ void Config::loadStyles(bool darkMode) const {
     qApp->setStyleSheet(strCss);
 }
 
+void Config::loadSQLConnection() {
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("githelperdb");
+    db.setUserName("root");
+    db.setHostName("localhost");
+    db.setPassword("password");
+    if (!db.open()) {
+
+    }
+}
+
+Config::~Config() {
+    db.close();
+}
+
 
