@@ -14,6 +14,19 @@ Config* Config::getInstance() {
     return config;
 }
 
+/* loadSQLConnection: connect to db with commands (once for application, closing in destructor) */
+void Config::loadSQLConnection() {
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("githelperdb");
+    db.setUserName("root");
+    db.setHostName("localhost");
+    db.setPassword("password");
+    if (!db.open()) {
+
+    }
+}
+
+/* loadStyles: loading app styles by mode */
 void Config::loadStyles(bool darkMode) const {
     QString strCss;
     QString prefix = darkMode ? "dark" : "light";
@@ -33,17 +46,6 @@ void Config::loadStyles(bool darkMode) const {
     }
 
     qApp->setStyleSheet(strCss);
-}
-
-void Config::loadSQLConnection() {
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("githelperdb");
-    db.setUserName("root");
-    db.setHostName("localhost");
-    db.setPassword("password");
-    if (!db.open()) {
-
-    }
 }
 
 Config::~Config() {

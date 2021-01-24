@@ -5,6 +5,7 @@ using namespace App;
 auto config = Config::getInstance();
 /* Init elements of MainWindow widget */
 MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "Git Helper") {
+    config->loadSQLConnection();
     // First level items
     spaceForTop = new QSpacerItem(100, 20);
     darkModeBtn = new QRadioButton("&Dark mode");
@@ -33,17 +34,11 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "G
     commandsLbl = new QLabel("I want to: ");
 
     commandBtn = new QPushButton("...");
-    auto commandMenu = new QMenu(commandBtn);
-    auto mainCommands = (new DbProxy())->getMainCommands();
-    for(auto &command : mainCommands) {
-        commandMenu->addAction(command.name, [&, command](){ slotCommandButtonClicked(command); });
-    }
 
     // hidden command buttons
-    commandBtn->setMenu(commandMenu);
-    commandBtn2 = new QPushButton("");
+    commandBtn2 = new QPushButton("...");
     commandBtn2->setVisible(false);
-    commandBtn3 = new QPushButton("");
+    commandBtn3 = new QPushButton("...");
     commandBtn3->setVisible(false);
 
     // logic of elements
@@ -72,7 +67,16 @@ void MainWindow::writeSettings() {
 }
 
 void MainWindow::connectElements() {
+    // darkMode
     connect(darkModeBtn, SIGNAL(clicked()), SLOT(slotDarkModeBtnClicked()));
+
+    // generate slots for command button
+    auto commandMenu = new QMenu(commandBtn);
+    auto mainCommands = DbProxy::getMainCommands();
+    for(auto &command : mainCommands) {
+        commandMenu->addAction(command.name, [&, command](){ slotCommandButtonClicked(command); });
+    }
+    commandBtn->setMenu(commandMenu);
 }
 
 /* Build elements to MainWindow widget */
@@ -142,9 +146,12 @@ void MainWindow::slotDarkModeBtnClicked() const {
 }
 
 void MainWindow::slotCommandButtonClicked(const Command& command) const {
+
+    // load usage text
     commandBtn->setText(command.name);
     usageDisplay->setText(command.usage);
 
+    // if has note, load note text
     if(command.note.length() > 0) {
         noteLbl->setText("Note:");
         noteDisplay->setVisible(true);
@@ -155,7 +162,17 @@ void MainWindow::slotCommandButtonClicked(const Command& command) const {
         noteDisplay->setText("");
     }
 
+    // load child element of button
     if(command.hasChild) {
-        auto childCommands = (new DbProxy())->getChilrenCommands(command.id);
+        commandBtn2->setVisible(true);
+
+        auto commandMenu = new QMenu(commandBtn);
+        auto childCommands = DbProxy::getChildCommands(command.id);
+        for(auto &childCommand : childCommands) {
+            commandMenu->addAction(childCommand.name);
+        }
+        commandBtn2->setMenu(commandMenu);
+    }else {
+        commandBtn2->setVisible(false);
     }
 }

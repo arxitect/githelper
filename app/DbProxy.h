@@ -23,15 +23,10 @@ struct Command {
 
 class DbProxy {
 private:
-    QSqlDatabase db;
+    static QVector<Command> getElements(const QString& qString);
 public:
-    DbProxy(DbProxy &) = delete;
-    void operator=(const DbProxy &) = delete;
-    explicit DbProxy();
-    ~DbProxy();
-
-    QVector<Command> getMainCommands();
-    QVector<Command> getChilrenCommands(unsigned id);
+    static QVector<Command> getMainCommands();
+    static QVector<Command> getChildCommands(unsigned id);
 };
 
 }

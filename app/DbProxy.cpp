@@ -2,27 +2,12 @@
 
 using namespace App;
 
-DbProxy::DbProxy() {
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("githelperdb");
-    db.setUserName("root");
-    db.setHostName("localhost");
-    db.setPassword("password");
-    if (!db.open()) {
-
-    }
-}
-
-QVector<Command> DbProxy::getMainCommands() {
+/* getElements: method getting elements from db by passing string */
+QVector<Command> DbProxy::getElements(const QString& qString) {
     QSqlQuery query;
     QVector<Command> commands;
 
-    query.exec("SELECT commands.id, commands.name, commands.usage, commands.note_en as note, count(*) > 1 AS has_child "
-               "FROM commands "
-               "JOIN commands_children cc on commands.id = cc.command_id "
-               "WHERE is_main = 1 "
-               "GROUP BY commands.name");
-
+    query.exec(qString);
     auto record = query.record();
     while(query.next()) {
         commands.push_back({
@@ -31,16 +16,34 @@ QVector<Command> DbProxy::getMainCommands() {
             query.value(record.indexOf("usage")).toString(),
             query.value(record.indexOf("note")).toString(),
             query.value(record.indexOf("has_child")).toBool()
-       });
+        });
     }
 
     return commands;
 }
 
-QVector<Command> DbProxy::getChilrenCommands(unsigned id) {
-    return QVector<Command>{};
+QVector<Command> DbProxy::getMainCommands(){
+
+    QString qString = "SELECT commands.id, commands.name, commands.usage, commands.note_en as note,"
+               " count(commands_children.id) > 0 has_child "
+               "FROM commands "
+               "LEFT OUTER JOIN commands_children on commands.id = commands_children.command_id "
+               "WHERE is_main = 1 "
+               "GROUP BY commands.id";
+
+    return getElements(qString);
 }
 
-DbProxy::~DbProxy() {
-    db.close();
+QVector<Command> DbProxy::getChildCommands(unsigned id) {
+
+    QString qString = "SELECT commands.id, commands.name, commands.usage, commands.note, count(commands_children.id) > 0 has_child "
+                  "FROM (SELECT commands.id, commands.name, commands.usage, commands.note_en as note "
+                  "FROM commands_children "
+                  "JOIN commands ON commands.id = commands_children.child_id "
+                  "WHERE commands_children.command_id = %1) as commands "
+                  "LEFT OUTER JOIN commands_children on commands.id = commands_children.command_id "
+                  "GROUP BY commands.id";
+
+    return getElements(qString.arg(id));
 }
+
