@@ -32,14 +32,14 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "G
     noteDisplay->setObjectName("noteDisplay");
 
     commandsLbl = new QLabel("I want to: ");
+    // Init command Buttons
+    commandBtn = new CommandButton("...");
 
-    commandBtn = new QPushButton("...");
+    commandBtn->childButton = new CommandButton("...");
+    commandBtn->childButton->setVisible(false);
 
-    // hidden command buttons
-    commandBtn2 = new QPushButton("...");
-    commandBtn2->setVisible(false);
-    commandBtn3 = new QPushButton("...");
-    commandBtn3->setVisible(false);
+    commandBtn->childButton->childButton = new CommandButton("...");
+    commandBtn->childButton->childButton->setVisible(false);
 
     // logic of elements
     readSettings();
@@ -74,7 +74,7 @@ void MainWindow::connectElements() {
     auto commandMenu = new QMenu(commandBtn);
     auto mainCommands = DbProxy::getMainCommands();
     for(auto &command : mainCommands) {
-        commandMenu->addAction(command.name, [&, command](){ slotCommandButtonClicked(command); });
+        commandMenu->addAction(command.name, [&, command](){ slotCommandButtonClicked(command, commandBtn); });
     }
     commandBtn->setMenu(commandMenu);
 }
@@ -97,7 +97,6 @@ void MainWindow::buildWindow() {
     // 1.
     fLvlLayout->addWidget(darkModeBtn);
     fLvlLayout->addSpacerItem(spaceForTop);
-    //fLvlLayout->addWidget(switchLangBtn);
 
     // 2.
     sSubLayout->setAlignment(Qt::AlignTop);
@@ -112,8 +111,8 @@ void MainWindow::buildWindow() {
     tSubLayoutL->setContentsMargins(0, 0, 30, 0);
     tSubLayoutL->addWidget(commandsLbl);
     tSubLayoutL->addWidget(commandBtn);
-    tSubLayoutL->addWidget(commandBtn2);
-    tSubLayoutL->addWidget(commandBtn3);
+    tSubLayoutL->addWidget(commandBtn->childButton);
+    tSubLayoutL->addWidget(commandBtn->childButton->childButton);
     tSubLayoutR->addWidget(noteLbl);
     tSubLayoutR->addWidget(noteDisplay);
     tSubLayoutR->setAlignment(Qt::AlignTop);
@@ -145,10 +144,9 @@ void MainWindow::slotDarkModeBtnClicked() const {
     config->loadStyles(darkModeBtn->isChecked());
 }
 
-void MainWindow::slotCommandButtonClicked(const Command& command) const {
-
+void MainWindow::slotCommandButtonClicked(const Command &command, CommandButton *commandButton) const {
     // load usage text
-    commandBtn->setText(command.name);
+    commandButton->setText(command.name);
     usageDisplay->setText(command.usage);
 
     // if has note, load note text
@@ -164,15 +162,17 @@ void MainWindow::slotCommandButtonClicked(const Command& command) const {
 
     // load child element of button
     if(command.hasChild) {
-        commandBtn2->setVisible(true);
+        commandButton->childButton->setVisible(true);
 
         auto commandMenu = new QMenu(commandBtn);
         auto childCommands = DbProxy::getChildCommands(command.id);
         for(auto &childCommand : childCommands) {
-            commandMenu->addAction(childCommand.name);
+            /* TODO to fix child command error*/
+            commandMenu->addAction(childCommand.name,
+                                   [&, childCommand](){ slotCommandButtonClicked(childCommand, commandButton->childButton);});
         }
-        commandBtn2->setMenu(commandMenu);
+        commandButton->childButton->setMenu(commandMenu);
     }else {
-        commandBtn2->setVisible(false);
+        commandButton->childButton->setVisible(false);
     }
 }

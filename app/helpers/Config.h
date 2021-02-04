@@ -2,7 +2,7 @@
  *
  * This file is part of the Git Helper application.
  *
- * Application configuration singleton.
+ * Application configuration.
  *
 ****************************************************************************/
 #ifndef GIT_HELPER_CONFIG_H

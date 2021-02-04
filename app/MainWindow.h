@@ -11,8 +11,9 @@
 #define GIT_HELPER_MAINWINDOW_H
 
 #include <QtWidgets>
-#include "Config.h"
-#include "DbProxy.h"
+#include "helpers/Config.h"
+#include "helpers/DbProxy.h"
+#include "parts/CommandButton.h"
 
 namespace App {
 
@@ -24,12 +25,9 @@ private:
     QLabel* noteLbl;
     QLabel* commandsLbl;
     QRadioButton* darkModeBtn;
-    QPushButton* switchLangBtn;
     QSpacerItem* spaceForTop;
     QLabel* usageDisplay;
-    QPushButton* commandBtn;
-    QPushButton* commandBtn2;
-    QPushButton* commandBtn3;
+    CommandButton* commandBtn;
     QLabel* noteDisplay;
     QPushButton* copyBtn;
     QSettings settings;
@@ -43,7 +41,7 @@ public:
     ~MainWindow() override;
 public slots:
     void slotDarkModeBtnClicked() const;
-    void slotCommandButtonClicked(const Command& command) const;
+    void slotCommandButtonClicked(const Command &command, CommandButton *commandButton) const;
 };
 
 }
