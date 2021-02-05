@@ -145,6 +145,17 @@ void MainWindow::slotDarkModeBtnClicked() const {
 }
 
 void MainWindow::slotCommandButtonClicked(const Command &command, CommandButton *commandButton) const {
+    // collapse all children buttons
+    if(commandButton->childButton != nullptr) {
+        commandButton->childButton->setVisible(false);
+        commandButton->childButton->setText("...");
+
+        if(commandButton->childButton->childButton != nullptr) {
+            commandButton->childButton->childButton->setVisible(false);
+            commandButton->childButton->childButton->setText("...");
+        }
+    }
+
     // load usage text
     commandButton->setText(command.name);
     usageDisplay->setText(command.usage);
@@ -161,18 +172,15 @@ void MainWindow::slotCommandButtonClicked(const Command &command, CommandButton 
     }
 
     // load child element of button
-    if(command.hasChild) {
+    if(commandButton->childButton != nullptr && command.hasChild) {
         commandButton->childButton->setVisible(true);
 
         auto commandMenu = new QMenu(commandBtn);
         auto childCommands = DbProxy::getChildCommands(command.id);
-        for(auto &childCommand : childCommands) {
-            /* TODO to fix child command error*/
+        for (auto &childCommand : childCommands) {
             commandMenu->addAction(childCommand.name,
-                                   [&, childCommand](){ slotCommandButtonClicked(childCommand, commandButton->childButton);});
+                                   [=]() { slotCommandButtonClicked(childCommand, commandButton->childButton); });
         }
         commandButton->childButton->setMenu(commandMenu);
-    }else {
-        commandButton->childButton->setVisible(false);
     }
 }
