@@ -39,9 +39,10 @@ private:
 public:
     explicit MainWindow(QWidget *pwgt = nullptr);
     ~MainWindow() override;
-public slots:
+private slots:
     void slotDarkModeBtnClicked() const;
-    void slotCommandButtonClicked(const Command &command, CommandButton *commandButton) const;
+    void slotCommandBtnClicked(const Command &command, CommandButton *commandButton) const;
+    void slotCopyBtnClicked() const;
 };
 
 }

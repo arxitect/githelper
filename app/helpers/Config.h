@@ -28,4 +28,5 @@ public:
 };
 
 }
+
 #endif //GIT_HELPER_CONFIG_H

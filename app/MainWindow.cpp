@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "G
     copyBtn = new QPushButton();
     copyBtn->setObjectName("copyButton");
     copyBtn->setParent(usageDisplay);
+    copyBtn->setVisible(false);
 
     // Third level items
     noteLbl = new QLabel("");
@@ -32,7 +33,7 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "G
     noteDisplay->setObjectName("noteDisplay");
 
     commandsLbl = new QLabel("I want to: ");
-    // Init command Buttons
+    // Init command 3 lvl Buttons
     commandBtn = new CommandButton("...");
 
     commandBtn->childButton = new CommandButton("...");
@@ -67,14 +68,15 @@ void MainWindow::writeSettings() {
 }
 
 void MainWindow::connectElements() {
-    // darkMode
+    // Dark mode
     connect(darkModeBtn, SIGNAL(clicked()), SLOT(slotDarkModeBtnClicked()));
-
-    // generate slots for command button
+    // Copy button
+    connect(copyBtn, SIGNAL(clicked()), SLOT(slotCopyBtnClicked()));
+    // Slots for command button
     auto commandMenu = new QMenu(commandBtn);
     auto mainCommands = DbProxy::getMainCommands();
-    for(auto &command : mainCommands) {
-        commandMenu->addAction(command.name, [&, command](){ slotCommandButtonClicked(command, commandBtn); });
+    for(const auto &command : mainCommands) {
+        commandMenu->addAction(command.name, [&, command]() { slotCommandBtnClicked(command, commandBtn); });
     }
     commandBtn->setMenu(commandMenu);
 }
@@ -144,7 +146,16 @@ void MainWindow::slotDarkModeBtnClicked() const {
     config->loadStyles(darkModeBtn->isChecked());
 }
 
-void MainWindow::slotCommandButtonClicked(const Command &command, CommandButton *commandButton) const {
+void MainWindow::slotCopyBtnClicked() const {
+    auto clipboard = QApplication::clipboard();
+    clipboard->setText(usageDisplay->text());
+}
+
+void MainWindow::slotCommandBtnClicked(const Command &command, CommandButton *commandButton) const {
+    // If has usage show copy button
+    if(command.usage.length() > 0) copyBtn->setVisible(true);
+    else copyBtn->setVisible(false);
+
     // collapse all children buttons
     if(commandButton->childButton != nullptr) {
         commandButton->childButton->setVisible(false);
@@ -177,9 +188,9 @@ void MainWindow::slotCommandButtonClicked(const Command &command, CommandButton 
 
         auto commandMenu = new QMenu(commandBtn);
         auto childCommands = DbProxy::getChildCommands(command.id);
-        for (auto &childCommand : childCommands) {
+        for (const auto &childCommand : childCommands) {
             commandMenu->addAction(childCommand.name,
-                                   [=]() { slotCommandButtonClicked(childCommand, commandButton->childButton); });
+                                   [=]() { slotCommandBtnClicked(childCommand, commandButton->childButton); });
         }
         commandButton->childButton->setMenu(commandMenu);
     }

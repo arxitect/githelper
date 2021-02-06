@@ -10,12 +10,15 @@
 
 #include <QtWidgets/QPushButton>
 
+namespace App {
+
 class CommandButton : public QPushButton {
-    Q_OBJECT
+Q_OBJECT
 public:
-    CommandButton* childButton;
-    explicit CommandButton(const QString &text, QWidget *pwgt = nullptr) : QPushButton(text, pwgt){};
+    CommandButton *childButton;
+
+    explicit CommandButton(const QString &text, QWidget *pwgt = nullptr) : QPushButton(text, pwgt) {};
 };
 
-
+}
 #endif //GIT_HELPER_COMMANDBUTTON_H
