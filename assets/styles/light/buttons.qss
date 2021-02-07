@@ -41,6 +41,5 @@ QPushButton#copyButton {
     margin-top: 3px;
     margin-left: 195px;
     border: none;
-    background-color: #ffffff;
     qproperty-icon: url(../assets/images/icons/copy.png);
 }

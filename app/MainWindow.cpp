@@ -148,7 +148,7 @@ void MainWindow::slotDarkModeBtnClicked() const {
 
 void MainWindow::slotCopyBtnClicked() const {
     auto clipboard = QApplication::clipboard();
-    clipboard->setText(usageDisplay->text());
+    clipboard->setText(usageDisplay->text().replace('\n', ' '));
 }
 
 void MainWindow::slotCommandBtnClicked(const Command &command, CommandButton *commandButton) const {
