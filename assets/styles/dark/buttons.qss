@@ -20,6 +20,8 @@ QRadioButton::indicator:unchecked {
 }
 
 QPushButton {
+    width: 200px;
+    max-width: 200px;
     color: #4e443c;
     background-color: #ffffff;
     outline:none;

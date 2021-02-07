@@ -17,7 +17,7 @@ Config* Config::getInstance() {
 /* loadSQLConnection: connect to db with commands (once for application, closing in destructor) */
 void Config::loadSQLConnection() {
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("githelperdb");
+    db.setDatabaseName("../githelperdb");
     db.setUserName("root");
     db.setHostName("localhost");
     db.setPassword("password");
