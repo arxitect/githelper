@@ -18,6 +18,8 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "G
     usageLbl = new QLabel("Usage:");
 
     usageDisplay = new QLabel("");
+    usageDisplay->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    usageDisplay->setWordWrap(true);
     usageDisplay->setObjectName("usageDisplay");
 
     copyBtn = new QPushButton();
@@ -29,6 +31,8 @@ MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "G
     noteLbl = new QLabel("");
 
     noteDisplay = new QLabel("");
+    noteDisplay->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    noteDisplay->setWordWrap(true);
     noteDisplay->setVisible(false);
     noteDisplay->setObjectName("noteDisplay");
 
@@ -95,7 +99,6 @@ void MainWindow::buildWindow() {
     auto tSubLayoutR = new QVBoxLayout;
 
     /* add widgets to layouts */
-
     // 1.
     fLvlLayout->addWidget(darkModeBtn);
     fLvlLayout->addSpacerItem(spaceForTop);
@@ -104,6 +107,8 @@ void MainWindow::buildWindow() {
     sSubLayout->setAlignment(Qt::AlignTop);
     sSubLayout->addWidget(usageLbl);
     sSubLayout->addWidget(usageDisplay);
+
+    sLvlLayout->setAlignment(Qt::AlignTop);
     sLvlLayout->setContentsMargins(0, 10, 0, 0);
     sLvlLayout->addWidget(sloganLbl);
     sLvlLayout->addLayout(sSubLayout);
@@ -115,9 +120,11 @@ void MainWindow::buildWindow() {
     tSubLayoutL->addWidget(commandBtn);
     tSubLayoutL->addWidget(commandBtn->childButton);
     tSubLayoutL->addWidget(commandBtn->childButton->childButton);
+
+    tSubLayoutR->setAlignment(Qt::AlignTop);
     tSubLayoutR->addWidget(noteLbl);
     tSubLayoutR->addWidget(noteDisplay);
-    tSubLayoutR->setAlignment(Qt::AlignTop);
+
     tLvlLayout->setContentsMargins(0, 10, 0, 0);
     tLvlLayout->addLayout(tSubLayoutL);
     tLvlLayout->addLayout(tSubLayoutR);
@@ -134,7 +141,8 @@ void MainWindow::buildWindow() {
     setLayout(mainLayout);
     setObjectName("mainWindow");
     setWindowTitle("Git Helper");
-    setFixedSize(510, 257);
+    setFixedWidth(510);
+    setMinimumHeight(250);
 }
 
 MainWindow::~MainWindow() {

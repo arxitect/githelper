@@ -2,10 +2,6 @@ QLabel {
     color: #222222;
 }
 
-QLabel#sloganLbl {
-    max-height: 60px;
-}
-
 QLabel#usageDisplay {
     background-color: #ffffff;
     color: #f14e32;
@@ -17,6 +13,7 @@ QLabel#usageDisplay {
     padding-top: 5px;
     padding-left: 5px;
     padding-bottom: 5px;
+    padding-right: 50px;
 }
 
 QLabel#noteDisplay {
