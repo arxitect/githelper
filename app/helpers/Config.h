@@ -14,9 +14,10 @@ namespace App {
 
 class Config {
 private:
-    explicit Config() = default;
+    explicit Config() : rootPath("..") {};
     static Config* config;
     QSqlDatabase db;
+    QString rootPath;
 public:
     Config(Config &) = delete;
     void operator=(const Config &) = delete;

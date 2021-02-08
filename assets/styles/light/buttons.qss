@@ -37,9 +37,17 @@ QPushButton#langButton {
 
 QPushButton#copyButton {
     max-height: 50px;
-    max-width: 50px;
+    max-width: 30px;
     margin-top: 3px;
-    margin-left: 195px;
+    margin-left: 200px;
     border: none;
-    qproperty-icon: url(../assets/images/icons/copy.png);
+    image: url($root/assets/images/icons/copy.png);
+}
+
+QPushButton#copyButton:hover {
+    image: url($root/assets/images/icons/copy_hover.png);
+}
+
+QPushButton#copyButton:pressed {
+    image: url($root/assets/images/icons/copy.png);
 }

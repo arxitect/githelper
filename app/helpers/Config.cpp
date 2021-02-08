@@ -17,7 +17,7 @@ Config* Config::getInstance() {
 /* loadSQLConnection: connect to db with commands (once for application, closing in destructor) */
 void Config::loadSQLConnection() {
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("../githelperdb");
+    db.setDatabaseName(rootPath + "/githelperdb");
     db.setUserName("root");
     db.setHostName("localhost");
     db.setPassword("password");
@@ -31,9 +31,9 @@ void Config::loadStyles(bool darkMode) const {
     QString strCss;
     QString prefix = darkMode ? "dark" : "light";
     QStringList styles {
-        "../assets/styles/" + prefix + "/app.qss",
-        "../assets/styles/" + prefix + "/buttons.qss",
-        "../assets/styles/" + prefix + "/labels.qss"
+        rootPath + "/assets/styles/" + prefix + "/app.qss",
+        rootPath + "/assets/styles/" + prefix + "/buttons.qss",
+        rootPath + "/assets/styles/" + prefix + "/labels.qss"
     };
 
     for (auto &filename : styles) {
@@ -45,6 +45,8 @@ void Config::loadStyles(bool darkMode) const {
         file.close();
     }
 
+    // $root is the root path of application
+    strCss.replace("$root", rootPath);
     qApp->setStyleSheet(strCss);
 }
 

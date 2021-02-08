@@ -141,8 +141,7 @@ void MainWindow::buildWindow() {
     setLayout(mainLayout);
     setObjectName("mainWindow");
     setWindowTitle("Git Helper");
-    setFixedWidth(510);
-    setMinimumHeight(250);
+    setFixedSize(510, 270);
 }
 
 MainWindow::~MainWindow() {
