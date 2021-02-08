@@ -4,7 +4,7 @@ using namespace App;
 
 auto config = Config::getInstance();
 /* Init elements of MainWindow widget */
-MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings("Git Helper", "Git Helper") {
+MainWindow::MainWindow(QWidget *pwgt) : QWidget(pwgt), settings(config->getAppName(), config->getAppName()) {
     config->loadSQLConnection();
     // First level items
     spaceForTop = new QSpacerItem(100, 20);
@@ -140,7 +140,7 @@ void MainWindow::buildWindow() {
 
     setLayout(mainLayout);
     setObjectName("mainWindow");
-    setWindowTitle("Git Helper");
+    setWindowTitle(config->getAppName());
     setFixedSize(510, 270);
 }
 

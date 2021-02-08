@@ -14,10 +14,11 @@ namespace App {
 
 class Config {
 private:
-    explicit Config() : rootPath("..") {};
+    explicit Config() : rootPath(".."), appName("Git helper"){};
     static Config* config;
     QSqlDatabase db;
     QString rootPath;
+    QString appName;
 public:
     Config(Config &) = delete;
     void operator=(const Config &) = delete;
@@ -26,6 +27,8 @@ public:
     static Config* getInstance() ;
     void loadStyles(bool darkMode = false) const;
     void loadSQLConnection();
+    [[nodiscard]] QString getRootPath() const;
+    [[nodiscard]] QString getAppName() const;
 };
 
 }

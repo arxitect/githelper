@@ -50,8 +50,14 @@ void Config::loadStyles(bool darkMode) const {
     qApp->setStyleSheet(strCss);
 }
 
+QString Config::getRootPath() const {
+    return this->rootPath;
+}
+
+QString Config::getAppName() const{
+    return this->appName;
+}
+
 Config::~Config() {
     db.close();
 }
-
-
