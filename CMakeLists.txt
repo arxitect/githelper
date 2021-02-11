@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-set(APP_NAME "Git-Helper")
+set(APP_NAME "githelper")
 project(${APP_NAME} LANGUAGES CXX)
 
 set(TARGET tgt PROPERTY CXX_STANDARD 17)
@@ -28,3 +28,7 @@ set(SOURCE_FILES
 add_executable(${APP_NAME} ${SOURCE_FILES})
 
 target_link_libraries(${APP_NAME} Qt5::Widgets Qt5::Sql)
+
+install(TARGETS ${APP_NAME}
+        COMPONENT linapp
+        DESTINATION "/usr/bin/")

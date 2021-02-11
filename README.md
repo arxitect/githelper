@@ -1,1 +1,1 @@
-# Git Helper
+# Git helper
