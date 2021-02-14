@@ -34,6 +34,8 @@ target_link_libraries(${APP_NAME} Qt5::Widgets Qt5::Sql)
 
 install(DIRECTORY assets DESTINATION ${CMAKE_INSTALL_DATADIR}/${APP_NAME})
 install(FILES githelperdb DESTINATION ${CMAKE_INSTALL_DATADIR}/${APP_NAME})
+install(FILES githelper.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
+install(FILES assets/images/icons/app.png DESTINATION ${CMAKE_INSTALL_DATADIR}/pixmaps RENAME githelper.png)
 install(TARGETS ${APP_NAME}
         RUNTIME DESTINATION
         ${CMAKE_INSTALL_PREFIX}/bin)
