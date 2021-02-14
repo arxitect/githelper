@@ -14,11 +14,11 @@ namespace App {
 
 class Config {
 private:
-    explicit Config() : rootPath(".."), appName("Git helper"){};
+    explicit Config() : rootPath(ROOT_PATH), appName("Git helper"){};
     static Config* config;
     QSqlDatabase db;
-    QString rootPath;
-    QString appName;
+    const QString rootPath;
+    const QString appName;
 public:
     Config(Config &) = delete;
     void operator=(const Config &) = delete;

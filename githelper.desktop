@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Git helper
+Name[ru]= Git helper
+GenericName=Git helper
+Title=
+Exec=githelper
+Icon=githelper
+Terminal=false
+Type=Application
+Categories=Network;
