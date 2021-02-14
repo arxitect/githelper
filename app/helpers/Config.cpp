@@ -45,7 +45,7 @@ void Config::loadStyles(bool darkMode) const {
         file.close();
     }
 
-    // $root is the root path of application
+    // $root is the variable in styles
     strCss.replace("$root", rootPath);
     qApp->setStyleSheet(strCss);
 }

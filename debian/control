@@ -1,0 +1,11 @@
+Source: githelper
+Section: misc
+Priority: optional
+Maintainer: Dmitriy Kozyrev <ko3bIpb1625347@gmail.com>
+Build-Depends: cmake, build-essential, libgl1-mesa-dev, qtbase5-dev
+Version: 1.0
+Homepage: https://github.com/arxitect/githelper
+
+Package: githelper
+Architecture: all
+Description: Application for finding git commands
